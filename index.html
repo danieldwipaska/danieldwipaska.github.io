@@ -17,16 +17,24 @@
         <div class="col-md-2"></div>
         <div class="col-md-8 border rounded-pill border-dark my-5" style="padding-top: 20px">
           <h1 class="text-center">To-Do List</h1>
+          <p class="text-center">By @danieldwipaska</p>
           <br />
           <div class="container">
             <div class="row">
               <div class="col-md-2"></div>
               <div class="col-md-8">
                 <div class="input-group">
-                  <input type="text" class="form-control input-area" placeholder="Recipient's username" aria-label="Recipient's username with two button addons" />
+                  <input type="text" class="form-control input-area" placeholder="Text area..." aria-label="Recipient's username with two button addons" />
                   <button class="btn btn-outline-primary submit-button" type="button">Submit</button>
                   <button class="btn btn btn-outline-danger clear-button" type="button">Clear List</button>
                 </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-8">
+                <button type="button" class="btn btn-primary btn-sm modal-button-wyhd" data-bs-toggle="modal" data-bs-target="#exampleModal">What you have done</button>
               </div>
               <div class="col-md-2"></div>
             </div>
@@ -37,11 +45,23 @@
       </div>
     </div>
     <div class="container text-center">
-      <ol class="list-group list-group-numbered daftar-kegiatan">
-        <!-- <li class="list-group-item border-0">A list item</li>
-        <li class="list-group-item border-0">A list item</li>
-        <li class="list-group-item border-0">A list item</li> -->
-      </ol>
+      <ol class="list-group list-group-numbered daftar-kegiatan"></ol>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">What you have done:</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
