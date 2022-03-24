@@ -47,7 +47,7 @@ function createSummary() {
   const tdAmountElement = document.createElement('td');
   const tdCloseButtonElement = document.createElement('td');
 
-  //creating 4 text node for elements 'td'
+  //create 4 text node for elements 'td'
   const tdName = document.createTextNode(inputName.value);
   const tdDate = document.createTextNode(inputDate.value);
   const tdAmount = document.createTextNode(inputAmount.value);
