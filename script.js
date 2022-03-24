@@ -1,113 +1,111 @@
-const submit = document.querySelector('.submit-button');
-const clearList = document.querySelector('.clear-button');
+const addButton = document.querySelector('.add-button');
+const tBody = document.querySelector('tbody');
 
-// Record What User Has Done from To-Do List
-let strDoneList = '';
-setInterval(function () {
-  let doneListRecord = document.querySelectorAll('.done-list');
-  let arrDoneList = [];
-  for (let i = 0; i < doneListRecord.length; i++) {
-    let isiDoneList = doneListRecord[i].innerHTML;
-    arrDoneList.push('<li>' + isiDoneList + '</li>');
+// Event Add Expense
+addButton.addEventListener('click', function () {
+  // record user inputs
+  const inputName = document.querySelector('#inputName');
+  const inputDate = document.querySelector('#inputDate');
+  const inputAmount = document.querySelector('#inputAmount');
+
+  if (inputName.value === '' || inputDate.value === '' || inputAmount.value === '') {
+    alert('Please do not leave "Name", "Date", or "Amount" blank');
+  } else {
+    // create summary from user inputs
+    createSummary();
+
+    // execute function event close
+    closeButton();
+
+    // reset user inputs
+    inputName.value = '';
+    inputDate.value = '';
+    inputAmount.value = '';
   }
-  strDoneList = arrDoneList.join('');
-}, 0);
+});
 
-// Insert What User Has Done into class 'modal-body' using event 'whatyouhavedone'
-const modalButton = document.querySelector('.modal-button-wyhd');
-modalButton.addEventListener('click', function () {
-  const modalBody = document.querySelector('.modal-body');
-  modalBody.innerHTML = '<ol>' + strDoneList + '</ol>';
-  const ambilButton = modalBody.querySelectorAll('button');
-  ambilButton.forEach(function (e) {
-    e.style.display = 'none';
+// Function for Event Close
+function closeButton() {
+  const closeButton = tBody.querySelectorAll('.close-button');
+  closeButton.forEach(function (m) {
+    m.addEventListener('click', function (e) {
+      e.target.parentElement.parentElement.remove();
+    });
   });
-});
+}
 
-// Event 'Submit'
-submit.addEventListener('click', function () {
-  // Recording User Input
-  const inputText = document.querySelector('.input-area');
+// Function create summary from user inputs
+function createSummary() {
+  // creating element 'tr'
+  const tr = document.createElement('tr');
+  // inserting element 'tr' into HTML <tbody>
+  tBody.appendChild(tr);
 
-  if (inputText.value === '') {
-    alert('Please fill the text area!!!');
-  } else {
-    // creating element 'li' and join it to user input
-    const liBaru = document.createElement('li');
-    const teksBaru = document.createTextNode(inputText.value + ' ');
-    liBaru.appendChild(teksBaru);
+  //creating 4 elements 'td'
+  const tdNameElement = document.createElement('td');
+  const tdDateElement = document.createElement('td');
+  const tdAmountElement = document.createElement('td');
+  const tdCloseButtonElement = document.createElement('td');
 
-    // insert the 'li' to HTML element <ol>
-    const isiContainer = document.querySelector('.daftar-kegiatan');
-    isiContainer.appendChild(liBaru);
+  //creating 4 text node for elements 'td'
+  const tdName = document.createTextNode(inputName.value);
+  const tdDate = document.createTextNode(inputDate.value);
+  const tdAmount = document.createTextNode(inputAmount.value);
 
-    // insert new classes into HTML element <li>
-    const isiLi = isiContainer.querySelectorAll('li');
-    isiLi.forEach(function (e) {
-      e.classList.add('list-group-item', 'border-0');
-    });
+  //mix 4 elements 'td' with 4 text node
+  tdNameElement.appendChild(tdName);
+  tdDateElement.appendChild(tdDate);
+  tdAmountElement.appendChild(tdAmount);
 
-    // creating element 'button' with text 'close'
-    const closeButton = document.createElement('button');
-    const simbolClose = document.createTextNode('X');
-    closeButton.appendChild(simbolClose);
+  const elementTr = tBody.querySelector('tr:last-child');
+  elementTr.appendChild(tdNameElement);
+  elementTr.appendChild(tdDateElement);
+  elementTr.appendChild(tdAmountElement);
+  elementTr.appendChild(tdCloseButtonElement);
 
-    // creating element  'button', with text 'done'
-    const doneButton = document.createElement('button');
-    const textDone = document.createTextNode('done');
-    doneButton.appendChild(textDone);
+  // insert a class into every <tr>
+  elementTr.classList.add('table-secondary');
 
-    // insert 'close' and 'done' button into HTML element <li>
-    isiLi.forEach(function (e) {
-      e.appendChild(closeButton);
-      e.appendChild(doneButton);
-    });
-    // insert new attributes 'type' and 'classes' into HTML element <button> 'close'
-    const isiClose = isiContainer.querySelectorAll('button:first-child');
-    isiClose.forEach(function (e) {
-      e.setAttribute('type', 'button');
-      e.classList.add('btn', 'btn-outline-danger', 'btn-sm', 'close-button');
-    });
+  // create and insert close button
+  closeButtonElement();
 
-    // insert new attributes 'type' and 'classes' into HTML element <button> 'done'
-    const isiDone = isiContainer.querySelectorAll('button:last-child');
-    isiDone.forEach(function (el) {
-      el.setAttribute('type', 'button');
-      el.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'done-button');
-      el.addEventListener('click', function (e) {
-        e.target.parentElement.classList.add('done-list');
-        e.target.parentElement.style.display = 'none';
-      });
-    });
+  // elementTd.appendChild(tdCloseButton);
+}
 
-    // remove <li> display targetted
-    const close = document.querySelectorAll('.close-button');
-    close.forEach(function (el) {
-      el.addEventListener('click', function (e) {
-        e.target.parentElement.style.display = 'none';
-      });
-    });
-    inputText.value = '';
-  }
-});
+// Function creating and inserting close button
+function closeButtonElement() {
+  //   creating close button
+  const tdCloseButton = document.createElement('button');
+  const tdClose = document.createTextNode('X');
+  tdCloseButton.appendChild(tdClose);
 
-// Event Clear List
-clearList.addEventListener('click', function () {
-  const isiContainer = document.querySelector('.daftar-kegiatan');
-  let cekList = isiContainer.querySelectorAll('li');
-  console.log(cekList);
-  let arrCekList = [];
-  for (let i = 0; i < cekList.length; i++) {
-    let isiCekList = cekList[i].innerHTML;
-    arrCekList.push(isiCekList);
-  }
-  console.log(arrCekList[0]);
-  if (arrCekList[0] === undefined) {
-    alert('To-Do List is still empty!!!');
-  } else {
-    for (let i = 0; i < cekList.length; i++) {
-      isiContainer.removeChild(cekList[i]);
-    }
-    textContainer = '';
-  }
-});
+  // inserting close button to td:last-child
+  const allElementTr = tBody.querySelectorAll('tr');
+  allElementTr.forEach(function (e) {
+    const elementTd = e.querySelector('td:last-child');
+    elementTd.appendChild(tdCloseButton);
+    const closeClass = e.querySelector('button');
+    closeClass.setAttribute('type', 'button');
+    closeClass.classList.add('btn', 'btn-danger', 'btn-sm', 'close-button');
+  });
+  // console.log(totalAmountValue);
+}
+
+function totalAmount(m) {
+  const amount = m.querySelector('td:nth-child(3)').childNodes;
+  return parseInt(amount[0].data);
+}
+const classTotalAmount = document.querySelector('.total-amount');
+let nmbTotalAmount = 0;
+
+setInterval(function () {
+  const allElementTr = tBody.querySelectorAll('tr');
+  let totalAmountValue = 0;
+  allElementTr.forEach(function (e) {
+    let amountValue = totalAmount(e);
+    totalAmountValue += amountValue;
+  });
+  // console.log(totalAmountValue);
+  nmbTotalAmount = totalAmountValue;
+  classTotalAmount.innerHTML = `IDR ${nmbTotalAmount}`;
+}, 0);
